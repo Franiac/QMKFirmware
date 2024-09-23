@@ -1,27 +1,149 @@
 # Avalanche
 
-![Avalanche v3.0](https://github.com/vlkv/avalanche/blob/master/images/avalanche_v3-0.jpg)
+## Compile
 
-An open source ergonomic split keyboard with removable keys to support 40% and 60% configurations.
+```PS
+qmk compile -kb avalanche/v4 -km default
+```
 
-* Keyboard Maintainer: [Vitaly Volkov](https://github.com/vlkv)
-* Hardware Supported: Avalanche PCB v1, v2, v3, Pro Micro 5V/16MHz and compatible.
-* Hardware Availability: [Avalanche](https://github.com/vlkv/avalanche).
+## Flash
 
-Make example for this keyboard (after setting up your build environment):
+### For DFU Bootloader
 
-    make avalanche/v1:default  # for v1 PCBs
-    make avalanche/v2:default  # for v2 PCBs
-    make avalanche/v3:default  # for v3 PCBs
+```PS
+qmk flash -kb avalanche/v4 -km default -bl dfu-split-[left|right]
+```
 
-Flashing example for this keyboard:
+### For Caterina Bootloader
 
-    make avalanche/v1:default:flash  # for v1 PCBs
-    make avalanche/v2:default:flash  # for v2 PCBs
-    make avalanche/v3:default:flash  # for v3 PCBs
+```PS
+qmk flash -kb avalanche/v4 -km default -bl avrdude-split-[left|right]
+```
 
-See the [build environment setup](https://docs.qmk.fm/#/getting_started_build_tools) and the [make instructions](https://docs.qmk.fm/#/getting_started_make_guide) for more information. Brand new to QMK? Start with our [Complete Newbs Guide](https://docs.qmk.fm/#/newbs).
+## Enable Debug Mode
 
-## Bootloader
+Modify `keyboard.json`:
 
-Briefly press the button along the inner edge of the PCB next to the microcontroller.
+```JSON
+{
+  "console": true
+}
+```
+
+Use `keyboard_post_init_user` in `keymap.c`:
+
+```C
+void keyboard_post_init_user(void) {
+    debug_enable=true;
+}
+```
+
+## Log Key Info
+
+Include `print.h` in `keymap.c`:
+
+```C
+#include "print.h"
+```
+
+Print key info:
+
+```C
+uprintf("KC: 0x%04X, MOD: 0x%04X, COL: %2u, ROW: %2u, PRESSED: %u, TIME: %5u, INT: %u, COUNT: %u\n", keycode, get_mods() & MOD_MASK_SHIFT, record->event.key.col, record->event.key.row, record->event.pressed, record->event.time, record->tap.interrupted, record->tap.count);
+```
+
+## Unicode
+
+### Windows-1252 Codepage
+
+Define macro enum:
+
+```C
+enum custom_keycodes {
+    AE = SAFE_RANGE,
+    OE,
+    UE,
+    SZ,
+    EU
+};
+```
+
+Implement macros:
+
+```C
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    uint8_t mods = get_mods();
+    uint8_t shift = mods & MOD_MASK_SHIFT;
+
+    switch (keycode) {
+        case AE:
+            clear_mods();
+
+            if (record->event.pressed) {
+                if (shift) {
+                    SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_TAP(X_P1)SS_TAP(X_P9)SS_TAP(X_P6)));
+                }
+                else {
+                    SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_TAP(X_P2)SS_TAP(X_P2)SS_TAP(X_P8)));
+                }
+            }
+
+            set_mods(mods);
+
+            return false;
+        case OE:
+            clear_mods();
+
+            if (record->event.pressed) {
+                if (shift) {
+                    SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_TAP(X_P2)SS_TAP(X_P1)SS_TAP(X_P4)));
+                }
+                else {
+                    SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_TAP(X_P2)SS_TAP(X_P4)SS_TAP(X_P6)));
+                }
+            }
+
+            set_mods(mods);
+
+            return false;
+        case UE:
+            clear_mods();
+
+            if (record->event.pressed) {
+                if (shift) {
+                    SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_TAP(X_P2)SS_TAP(X_P2)SS_TAP(X_P0)));
+                }
+                else {
+                    SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_TAP(X_P2)SS_TAP(X_P5)SS_TAP(X_P2)));
+                }
+            }
+
+            set_mods(mods);
+
+            return false;
+        case SZ:
+            clear_mods();
+
+            if (record->event.pressed) {
+                SEND_STRING(SS_DOWN(X_RALT)SS_TAP(X_P0)SS_TAP(X_P2)SS_TAP(X_P2)SS_TAP(X_P3)SS_UP(X_RALT));
+            }
+
+            set_mods(mods);
+
+            return false;
+
+        case EU:
+            clear_mods();
+
+            if (record->event.pressed) {
+                SEND_STRING(SS_RALT(SS_TAP(X_P8)SS_TAP(X_P3)SS_TAP(X_P6)SS_TAP(X_P4)));
+            }
+
+            set_mods();
+
+            return false;
+    }
+
+    return true;
+}
+```
