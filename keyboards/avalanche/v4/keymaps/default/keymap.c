@@ -48,13 +48,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 [G1] = LAYOUT(
                  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                                                 KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_NO,
-                 KC_T,    KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,                                                 KC_NO,   KC_NO,   KC_UP,   KC_NO,   KC_NO,   KC_NO,
-        KC_ESC,  KC_G,    KC_LSFT, KC_A,    KC_S,    KC_D,    KC_F,                                                 KC_NO,   KC_LEFT, KC_DOWN, KC_RGHT, KC_NO,   KC_NO,   KC_ENT,
-                 KC_M,    KC_LCTL, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    TO_N1,            TO_N1,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,
-                                            KC_H,    KC_J,    KC_LALT, KC_SPC,  KC_K,             KC_NO,   MO_G2,   MO_G3,   KC_NO,   KC_NO
+                 KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                                                 KC_NO,   KC_NO,   KC_UP,   KC_NO,   KC_NO,   KC_NO,
+        KC_ESC,  KC_LSFT, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                                                 KC_NO,   KC_LEFT, KC_DOWN, KC_RGHT, KC_NO,   KC_NO,   KC_ENT,
+                 KC_LCTL, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_H,    TO_N1,            TO_N1,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,
+                                            KC_J,    KC_K,    KC_LALT, KC_SPC,  KC_L,             KC_NO,   MO_G2,   MO_G3,   KC_NO,   KC_NO
 ),
 [G2] = LAYOUT(
-                 KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                                                KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,
+                 KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,                                                KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,
                  KC_NO,   KC_0,    KC_1,    KC_2,    KC_3,    KC_NO,                                                KC_NO,   KC_NO,   KC_TRNS, KC_NO,   KC_NO,   KC_NO,
         KC_NO,   KC_NO,   KC_0,    KC_4,    KC_5,    KC_6,    KC_NO,                                                KC_NO,   KC_TRNS, KC_TRNS, KC_TRNS, KC_NO,   KC_NO,   KC_NO,
                  KC_NO,   KC_0,    KC_7,    KC_8,    KC_9,    KC_NO,   KC_NO,   KC_TRNS,          KC_TRNS, KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,
@@ -79,10 +79,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
             if (record->event.pressed) {
                 if (shift) {
-                    SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_DELAY(10)SS_TAP(X_P1)SS_DELAY(10)SS_TAP(X_P9)SS_DELAY(10)SS_TAP(X_P6)));
+                    SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_TAP(X_P1)SS_TAP(X_P9)SS_TAP(X_P6)));
                 }
                 else {
-                    SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_DELAY(10)SS_TAP(X_P2)SS_DELAY(10)SS_TAP(X_P2)SS_DELAY(10)SS_TAP(X_P8)));
+                    SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_TAP(X_P2)SS_TAP(X_P2)SS_TAP(X_P8)));
                 }
             }
 
@@ -94,10 +94,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
             if (record->event.pressed) {
                 if (shift) {
-                    SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_DELAY(10)SS_TAP(X_P2)SS_DELAY(10)SS_TAP(X_P1)SS_DELAY(10)SS_TAP(X_P4)));
+                    SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_TAP(X_P2)SS_TAP(X_P1)SS_TAP(X_P4)));
                 }
                 else {
-                    SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_DELAY(10)SS_TAP(X_P2)SS_DELAY(10)SS_TAP(X_P4)SS_DELAY(10)SS_TAP(X_P6)));
+                    SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_TAP(X_P2)SS_TAP(X_P4)SS_TAP(X_P6)));
                 }
             }
 
@@ -109,10 +109,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
             if (record->event.pressed) {
                 if (shift) {
-                    SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_DELAY(10)SS_TAP(X_P2)SS_DELAY(10)SS_TAP(X_P2)SS_DELAY(10)SS_TAP(X_P0)));
+                    SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_TAP(X_P2)SS_TAP(X_P2)SS_TAP(X_P0)));
                 }
                 else {
-                    SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_DELAY(10)SS_TAP(X_P2)SS_DELAY(10)SS_TAP(X_P5)SS_DELAY(10)SS_TAP(X_P2)));
+                    SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_TAP(X_P2)SS_TAP(X_P5)SS_TAP(X_P2)));
                 }
             }
 
@@ -123,7 +123,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             clear_mods();
 
             if (record->event.pressed) {
-                SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_DELAY(10)SS_TAP(X_P2)SS_DELAY(10)SS_TAP(X_P2)SS_DELAY(10)SS_TAP(X_P3)));
+                SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_TAP(X_P2)SS_TAP(X_P2)SS_TAP(X_P3)));
             }
 
             set_mods(mods);
@@ -134,7 +134,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             clear_mods();
 
             if (record->event.pressed) {
-                SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_DELAY(10)SS_TAP(X_P1)SS_DELAY(10)SS_TAP(X_P2)SS_DELAY(10)SS_TAP(X_P8)));
+                SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_TAP(X_P1)SS_TAP(X_P2)SS_TAP(X_P8)));
             }
 
             set_mods(mods);
