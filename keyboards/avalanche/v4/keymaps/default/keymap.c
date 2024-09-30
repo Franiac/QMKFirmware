@@ -1,7 +1,8 @@
 #include QMK_KEYBOARD_H
 
 enum custom_keycodes {
-    AE = SAFE_RANGE,
+    UC = SAFE_RANGE,
+    AE,
     OE,
     UE,
     SZ,
@@ -16,6 +17,15 @@ enum layer {
     G2,
     G3
 };
+
+typedef union {
+    uint32_t raw;
+    struct {
+        bool mode :1;
+    };
+} user_config_t;
+
+user_config_t user_config;
 
 #define MO_N2 MO(N2)
 #define MO_N3 MO(N3)
@@ -42,7 +52,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [N3] = LAYOUT(
                  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                                              KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
                  KC_TRNS, KC_P0,   KC_P1,   KC_P2,   KC_P3,   KC_LPRN,                                              KC_RPRN, KC_EXLM, KC_AT,   KC_HASH, UE,      SZ,
-        KC_NO,   KC_TRNS, KC_P0,   KC_P4,   KC_P5,   KC_P6,   KC_DEL,                                               KC_BSPC, KC_DLR,  KC_PERC, KC_CIRC, AE,      OE,      KC_NO,
+        UC,      KC_TRNS, KC_P0,   KC_P4,   KC_P5,   KC_P6,   KC_DEL,                                               KC_BSPC, KC_DLR,  KC_PERC, KC_CIRC, AE,      OE,      KC_NO,
                  KC_TRNS, KC_P0,   KC_P7,   KC_P8,   KC_P9,   KC_LBRC, KC_TRNS, KC_TRNS,          KC_TRNS, KC_TRNS, KC_RBRC, KC_AMPR, KC_ASTR, KC_NO,   EU,      KC_TRNS,
                                             KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
 ),
@@ -69,20 +79,45 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 )
 };
 
+void keyboard_post_init_user(void) {
+    user_config.raw = eeconfig_read_user();
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     uint8_t mods = get_mods();
     uint8_t shift = mods & MOD_MASK_SHIFT;
 
     switch (keycode) {
+        case UC:
+            clear_mods();
+
+            if (record->event.pressed) {
+                user_config.mode ^= 1;
+                eeconfig_update_user(user_config.raw);
+            }
+
+            set_mods(mods);
+
+            return false;
         case AE:
             clear_mods();
 
             if (record->event.pressed) {
-                if (shift) {
-                    SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_TAP(X_P1)SS_TAP(X_P9)SS_TAP(X_P6)));
+                if (user_config.mode){
+                    if (shift) {
+                        SEND_STRING(SS_LSFT(SS_LCTL(SS_TAP(X_P0)SS_TAP(X_P0)SS_TAP(X_C)SS_TAP(X_P4))));
+                    }
+                    else {
+                        SEND_STRING(SS_LSFT(SS_LCTL(SS_TAP(X_P0)SS_TAP(X_P0)SS_TAP(X_E)SS_TAP(X_P4))));
+                    }
                 }
                 else {
-                    SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_TAP(X_P2)SS_TAP(X_P2)SS_TAP(X_P8)));
+                    if (shift) {
+                        SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_TAP(X_P1)SS_TAP(X_P9)SS_TAP(X_P6)));
+                    }
+                    else {
+                        SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_TAP(X_P2)SS_TAP(X_P2)SS_TAP(X_P8)));
+                    }
                 }
             }
 
@@ -93,11 +128,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             clear_mods();
 
             if (record->event.pressed) {
-                if (shift) {
-                    SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_TAP(X_P2)SS_TAP(X_P1)SS_TAP(X_P4)));
+                if (user_config.mode){
+                    if (shift) {
+                        SEND_STRING(SS_LSFT(SS_LCTL(SS_TAP(X_P0)SS_TAP(X_P0)SS_TAP(X_D)SS_TAP(X_P6))));
+                    }
+                    else {
+                        SEND_STRING(SS_LSFT(SS_LCTL(SS_TAP(X_P0)SS_TAP(X_P0)SS_TAP(X_F)SS_TAP(X_P6))));
+                    }
                 }
                 else {
-                    SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_TAP(X_P2)SS_TAP(X_P4)SS_TAP(X_P6)));
+                    if (shift) {
+                        SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_TAP(X_P2)SS_TAP(X_P1)SS_TAP(X_P4)));
+                    }
+                    else {
+                        SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_TAP(X_P2)SS_TAP(X_P4)SS_TAP(X_P6)));
+                    }
                 }
             }
 
@@ -108,11 +153,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             clear_mods();
 
             if (record->event.pressed) {
-                if (shift) {
-                    SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_TAP(X_P2)SS_TAP(X_P2)SS_TAP(X_P0)));
+                if (user_config.mode){
+                    if (shift) {
+                        SEND_STRING(SS_LSFT(SS_LCTL(SS_TAP(X_P0)SS_TAP(X_P0)SS_TAP(X_D)SS_TAP(X_C))));
+                    }
+                    else {
+                        SEND_STRING(SS_LSFT(SS_LCTL(SS_TAP(X_P0)SS_TAP(X_P0)SS_TAP(X_F)SS_TAP(X_C))));
+                    }
                 }
                 else {
-                    SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_TAP(X_P2)SS_TAP(X_P5)SS_TAP(X_P2)));
+                    if (shift) {
+                        SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_TAP(X_P2)SS_TAP(X_P2)SS_TAP(X_P0)));
+                    }
+                    else {
+                        SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_TAP(X_P2)SS_TAP(X_P5)SS_TAP(X_P2)));
+                    }
                 }
             }
 
@@ -123,7 +178,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             clear_mods();
 
             if (record->event.pressed) {
-                SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_TAP(X_P2)SS_TAP(X_P2)SS_TAP(X_P3)));
+                if (user_config.mode){
+                    SEND_STRING(SS_LSFT(SS_LCTL(SS_TAP(X_P0)SS_TAP(X_P0)SS_TAP(X_D)SS_TAP(X_F))));
+                }
+                else {
+                    SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_TAP(X_P2)SS_TAP(X_P2)SS_TAP(X_P3)));
+                }
             }
 
             set_mods(mods);
@@ -134,7 +194,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             clear_mods();
 
             if (record->event.pressed) {
-                SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_TAP(X_P1)SS_TAP(X_P2)SS_TAP(X_P8)));
+                if (user_config.mode){
+                    SEND_STRING(SS_LSFT(SS_LCTL(SS_TAP(X_P2)SS_TAP(X_P0)SS_TAP(X_A)SS_TAP(X_C))));
+                }
+                else {
+                    SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_TAP(X_P1)SS_TAP(X_P2)SS_TAP(X_P8)));
+                }
             }
 
             set_mods(mods);
