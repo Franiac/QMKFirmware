@@ -8,13 +8,13 @@ qmk compile -kb avalanche/v4 -km default
 
 ## Flash
 
-### For DFU Bootloader
+### For DFU Bootloader (Sea Micro)
 
 ```PS
 qmk flash -kb avalanche/v4 -km default -bl dfu-split-[left|right]
 ```
 
-### For Caterina Bootloader
+### For Caterina Bootloader (Pro Micro)
 
 ```PS
 qmk flash -kb avalanche/v4 -km default -bl avrdude-split-[left|right]
