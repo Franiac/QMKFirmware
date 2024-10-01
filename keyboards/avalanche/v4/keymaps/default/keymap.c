@@ -105,10 +105,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 if (user_config.mode){
                     if (shift) {
-                        SEND_STRING(SS_LSFT(SS_LCTL(SS_TAP(X_P0)SS_TAP(X_P0)SS_TAP(X_C)SS_TAP(X_P4))));
+                        SEND_STRING(SS_LSFT(SS_LCTL(SS_TAP(X_U)SS_TAP(X_P0)SS_TAP(X_P0)SS_TAP(X_C)SS_TAP(X_P4))));
                     }
                     else {
-                        SEND_STRING(SS_LSFT(SS_LCTL(SS_TAP(X_P0)SS_TAP(X_P0)SS_TAP(X_E)SS_TAP(X_P4))));
+                        SEND_STRING(SS_LSFT(SS_LCTL(SS_TAP(X_U)SS_TAP(X_P0)SS_TAP(X_P0)SS_TAP(X_E)SS_TAP(X_P4))));
                     }
                 }
                 else {
@@ -130,10 +130,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 if (user_config.mode){
                     if (shift) {
-                        SEND_STRING(SS_LSFT(SS_LCTL(SS_TAP(X_P0)SS_TAP(X_P0)SS_TAP(X_D)SS_TAP(X_P6))));
+                        SEND_STRING(SS_LSFT(SS_LCTL(SS_TAP(X_U)SS_TAP(X_P0)SS_TAP(X_P0)SS_TAP(X_D)SS_TAP(X_P6))));
                     }
                     else {
-                        SEND_STRING(SS_LSFT(SS_LCTL(SS_TAP(X_P0)SS_TAP(X_P0)SS_TAP(X_F)SS_TAP(X_P6))));
+                        SEND_STRING(SS_LSFT(SS_LCTL(SS_TAP(X_U)SS_TAP(X_P0)SS_TAP(X_P0)SS_TAP(X_F)SS_TAP(X_P6))));
                     }
                 }
                 else {
@@ -155,10 +155,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 if (user_config.mode){
                     if (shift) {
-                        SEND_STRING(SS_LSFT(SS_LCTL(SS_TAP(X_P0)SS_TAP(X_P0)SS_TAP(X_D)SS_TAP(X_C))));
+                        SEND_STRING(SS_LSFT(SS_LCTL(SS_TAP(X_U)SS_TAP(X_P0)SS_TAP(X_P0)SS_TAP(X_D)SS_TAP(X_C))));
                     }
                     else {
-                        SEND_STRING(SS_LSFT(SS_LCTL(SS_TAP(X_P0)SS_TAP(X_P0)SS_TAP(X_F)SS_TAP(X_C))));
+                        SEND_STRING(SS_LSFT(SS_LCTL(SS_TAP(X_U)SS_TAP(X_P0)SS_TAP(X_P0)SS_TAP(X_F)SS_TAP(X_C))));
                     }
                 }
                 else {
@@ -179,7 +179,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
             if (record->event.pressed) {
                 if (user_config.mode){
-                    SEND_STRING(SS_LSFT(SS_LCTL(SS_TAP(X_P0)SS_TAP(X_P0)SS_TAP(X_D)SS_TAP(X_F))));
+                    SEND_STRING(SS_LSFT(SS_LCTL(SS_TAP(X_U)SS_TAP(X_P0)SS_TAP(X_P0)SS_TAP(X_D)SS_TAP(X_F))));
                 }
                 else {
                     SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_TAP(X_P2)SS_TAP(X_P2)SS_TAP(X_P3)));
@@ -195,7 +195,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
             if (record->event.pressed) {
                 if (user_config.mode){
-                    SEND_STRING(SS_LSFT(SS_LCTL(SS_TAP(X_P2)SS_TAP(X_P0)SS_TAP(X_A)SS_TAP(X_C))));
+                    SEND_STRING(SS_LSFT(SS_LCTL(SS_TAP(X_U)SS_TAP(X_P2)SS_TAP(X_P0)SS_TAP(X_A)SS_TAP(X_C))));
                 }
                 else {
                     SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_TAP(X_P1)SS_TAP(X_P2)SS_TAP(X_P8)));
