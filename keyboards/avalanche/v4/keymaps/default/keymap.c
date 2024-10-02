@@ -21,7 +21,7 @@ enum layer {
 typedef union {
     uint32_t raw;
     struct {
-        bool mode :1;
+        bool linux :1;
     };
 } user_config_t;
 
@@ -92,7 +92,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             clear_mods();
 
             if (record->event.pressed) {
-                user_config.mode ^= 1;
+                user_config.linux ^= 1;
                 eeconfig_update_user(user_config.raw);
             }
 
@@ -103,7 +103,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             clear_mods();
 
             if (record->event.pressed) {
-                if (user_config.mode){
+                if (user_config.linux){
                     if (shift) {
                         SEND_STRING(SS_LSFT(SS_LCTL(SS_TAP(X_U)SS_TAP(X_P0)SS_TAP(X_P0)SS_TAP(X_C)SS_TAP(X_P4))));
                     }
@@ -128,7 +128,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             clear_mods();
 
             if (record->event.pressed) {
-                if (user_config.mode){
+                if (user_config.linux){
                     if (shift) {
                         SEND_STRING(SS_LSFT(SS_LCTL(SS_TAP(X_U)SS_TAP(X_P0)SS_TAP(X_P0)SS_TAP(X_D)SS_TAP(X_P6))));
                     }
@@ -153,7 +153,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             clear_mods();
 
             if (record->event.pressed) {
-                if (user_config.mode){
+                if (user_config.linux){
                     if (shift) {
                         SEND_STRING(SS_LSFT(SS_LCTL(SS_TAP(X_U)SS_TAP(X_P0)SS_TAP(X_P0)SS_TAP(X_D)SS_TAP(X_C))));
                     }
@@ -178,7 +178,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             clear_mods();
 
             if (record->event.pressed) {
-                if (user_config.mode){
+                if (user_config.linux){
                     SEND_STRING(SS_LSFT(SS_LCTL(SS_TAP(X_U)SS_TAP(X_P0)SS_TAP(X_P0)SS_TAP(X_D)SS_TAP(X_F))));
                 }
                 else {
@@ -194,7 +194,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             clear_mods();
 
             if (record->event.pressed) {
-                if (user_config.mode){
+                if (user_config.linux){
                     SEND_STRING(SS_LSFT(SS_LCTL(SS_TAP(X_U)SS_TAP(X_P2)SS_TAP(X_P0)SS_TAP(X_A)SS_TAP(X_C))));
                 }
                 else {
