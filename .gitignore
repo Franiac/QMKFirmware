@@ -52,8 +52,6 @@ quantum/version.h
 *.iml
 .browse.VC.db*
 .cproject
-.idea
-.idea/
 .project
 .settings/
 
