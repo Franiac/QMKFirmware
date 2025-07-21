@@ -1,5 +1,12 @@
 # Avalanche
 
+## Sync Fork
+
+1. On GitHub select the `master` branch and `sync fork`
+2. Pull `master` and sub-repos locally
+3. Merge `master` into `franiac`
+4. Run `git clean -fdx` in order to prevent build errors
+
 ## Compile
 
 ```PS
