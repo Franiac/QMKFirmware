@@ -91,3 +91,96 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                             KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
 )
 };
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    uint8_t mode = get_unicode_input_mode();
+
+    if (mode != UNICODE_MODE_WINDOWS) {
+        return true;
+    }
+
+    uint8_t mods = get_mods();
+    uint8_t shift = mods & MOD_MASK_SHIFT;
+
+    switch (keycode) {
+        case AE:
+            clear_mods();
+
+            if (record->event.pressed) {
+                if (shift) {
+                    SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_DELAY(10)SS_TAP(X_P1)SS_DELAY(10)SS_TAP(X_P9)SS_DELAY(10)SS_TAP(X_P6)));
+                }
+                else {
+                    SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_DELAY(10)SS_TAP(X_P2)SS_DELAY(10)SS_TAP(X_P2)SS_DELAY(10)SS_TAP(X_P8)));
+                }
+            }
+
+            set_mods(mods);
+
+            return false;
+        case OE:
+            clear_mods();
+
+            if (record->event.pressed) {
+                if (shift) {
+                    SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_DELAY(10)SS_TAP(X_P2)SS_DELAY(10)SS_TAP(X_P1)SS_DELAY(10)SS_TAP(X_P4)));
+                }
+                else {
+                    SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_DELAY(10)SS_TAP(X_P2)SS_DELAY(10)SS_TAP(X_P4)SS_DELAY(10)SS_TAP(X_P6)));
+                }
+            }
+
+            set_mods(mods);
+
+            return false;
+        case UE:
+            clear_mods();
+
+            if (record->event.pressed) {
+                if (shift) {
+                    SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_DELAY(10)SS_TAP(X_P2)SS_DELAY(10)SS_TAP(X_P2)SS_DELAY(10)SS_TAP(X_P0)));
+                }
+                else {
+                    SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_DELAY(10)SS_TAP(X_P2)SS_DELAY(10)SS_TAP(X_P5)SS_DELAY(10)SS_TAP(X_P2)));
+                }
+            }
+
+            set_mods(mods);
+
+            return false;
+        case SZ:
+            clear_mods();
+
+            if (record->event.pressed) {
+                SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_DELAY(10)SS_TAP(X_P2)SS_DELAY(10)SS_TAP(X_P2)SS_DELAY(10)SS_TAP(X_P3)));
+            }
+
+            set_mods(mods);
+
+            return false;
+
+        case EUR:
+            clear_mods();
+
+            if (record->event.pressed) {
+                SEND_STRING(SS_RALT(SS_TAP(X_P0)SS_DELAY(10)SS_TAP(X_P1)SS_DELAY(10)SS_TAP(X_P2)SS_DELAY(10)SS_TAP(X_P8)));
+            }
+
+            set_mods(mods);
+
+            return false;
+
+        case DEG:
+            clear_mods();
+
+            if (record->event.pressed) {
+                SEND_STRING(SS_RALT(SS_TAP(X_P2)SS_DELAY(10)SS_TAP(X_P4)SS_DELAY(10)SS_TAP(X_P8)));
+            }
+
+            set_mods(mods);
+
+            return false;
+    }
+
+    return true;
+}
